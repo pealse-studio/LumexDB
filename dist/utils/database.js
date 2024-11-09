@@ -220,7 +220,7 @@ function updateVar() {
     catch (error) {
         (0, common_1.consoleLog)("updateVar | variables.json", error);
     }
-    createFiles;
+    createFiles();
 }
 function createFiles() {
     files.forEach(dbFile => {
