@@ -1,0 +1,22 @@
+{
+  "name": "@pealse-studio/lumex-db",
+  "description": "Fast and reliable additional, for interaction with the database",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "author": "mlad_",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/node": "^22.8.1",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "@tryforge/forgescript": "^1.4.0",
+    "better-sqlite3": "^11.5.0",
+    "protobufjs": "^7.4.0"
+  }
+}
