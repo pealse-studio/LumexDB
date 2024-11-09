@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "@tryforge/forgescript": "^1.4.0",
-    "better-sqlite3": "^11.5.0",
-    "protobufjs": "^7.4.0"
+    "better-sqlite3": "^11.5.0"
   }
 }
