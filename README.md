@@ -8,8 +8,8 @@
 npm i https://github.com/pealse-studio/LumexDB.git
 ```
 
-## Быстрый старт
-После установки подключите **PealseDB** к своему клиенту **ForgeScript** следующим образом:
+## Подключение
+После установки подключите **LumexDB** к своему клиенту **ForgeScript** следующим образом:
 
 ```js
 const { ForgeClient } = require("@tryforge/forgescript");
