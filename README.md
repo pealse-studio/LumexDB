@@ -20,6 +20,8 @@ const client = new ForgeClient({
         new LumexDB()
     ]
 });
+
+client.login("token");
 ```
 
 ### Структура данных и настройка
