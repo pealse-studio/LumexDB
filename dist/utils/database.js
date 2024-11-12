@@ -13,6 +13,7 @@ exports.optimizationVar = optimizationVar;
 exports.updateVar = updateVar;
 exports.createFiles = createFiles;
 const fs_1 = require("fs");
+const { promises: fs } = require('fs');
 const common_1 = require("./common");
 const path_1 = require("path");
 const better_sqlite3_1 = __importDefault(require("better-sqlite3"));
@@ -61,7 +62,7 @@ function setVar(type, name, value, id) {
         }
     }
     catch (error) {
-        (0, common_1.consoleLog)("setVar", error);
+        (0, common_1.consoleLog)("LumexDB | setVar", error);
     }
     finally {
         db.close();
@@ -92,7 +93,7 @@ function deleteVar(type, name, id) {
         }
     }
     catch (error) {
-        (0, common_1.consoleLog)("deleteVar", error);
+        (0, common_1.consoleLog)("LumexDB | deleteVar", error);
     }
     finally {
         db.close();
@@ -113,7 +114,7 @@ function getVar(type, name, id) {
         return JSON.parse(row.value)[name] ?? value;
     }
     catch (error) {
-        (0, common_1.consoleLog)("getVar", error);
+        (0, common_1.consoleLog)("LumexDB | getVar", error);
     }
     finally {
         db.close();
@@ -148,7 +149,7 @@ function toggleVar(type, name, id) {
         return result;
     }
     catch (error) {
-        (0, common_1.consoleLog)("toggleVar", error);
+        (0, common_1.consoleLog)("LumexDB | toggleVar", error);
     }
     finally {
         db.close();
@@ -164,24 +165,35 @@ function filterVar(type, name, value, id, guild) {
         return JSON.stringify(result) || undefined;
     }
     catch (error) {
-        (0, common_1.consoleLog)("filterVar", error);
+        (0, common_1.consoleLog)("LumexDB | filterVar", error);
     }
     finally {
         db.close();
     }
 }
-function resetVar(type, reset, id) {
+async function resetVar(type, reset, id) {
     const path = (0, path_1.join)(lumexPath, `${type}.db`);
     if (!(0, fs_1.existsSync)(path))
         return;
-    const db = new better_sqlite3_1.default(path);
     try {
+        if (reset === "all") {
+            await fs.unlink(path);
+            createFiles();
+        }
+        if (reset === "data") {
+            if (type === "global")
+                return;
+            if (!id) {
+                (0, common_1.consoleLog)("LumexDB | resetVar | data", "ID не указано для удаления.");
+                return;
+            }
+            const db = new better_sqlite3_1.default(path);
+            db.prepare(`DELETE FROM data WHERE id = ?`).run(id);
+            db.close();
+        }
     }
     catch (error) {
-        (0, common_1.consoleLog)("resetVar", error);
-    }
-    finally {
-        db.close();
+        (0, common_1.consoleLog)("LumexDB | resetVar", error);
     }
 }
 function optimizationVar() {
@@ -198,14 +210,14 @@ function optimizationVar() {
                 optimizedCount++;
             }
             catch (error) {
-                (0, common_1.consoleLog)("optimizationVar", `Error during optimization (${file}): ${error}`);
+                (0, common_1.consoleLog)("LumexDB", `Error during optimization (${file}): ${error}`);
             }
             finally {
                 db.close();
             }
         }
     });
-    (0, common_1.consoleLog)("optimizationVar", `Optimization completed: ${optimizedCount}/${files.length} files optimized successfully.`);
+    (0, common_1.consoleLog)("LumexDB", `Optimization completed ${optimizedCount}/${files.length} files optimized successfully.`);
 }
 function updateVar() {
     const variablesPath = (0, path_1.join)(lumexPath, "variables.json");
@@ -218,7 +230,7 @@ function updateVar() {
         variables = JSON.parse(data) || {};
     }
     catch (error) {
-        (0, common_1.consoleLog)("updateVar | variables.json", error);
+        (0, common_1.consoleLog)("LumexDB | updateVar | variables.json", error);
     }
     createFiles();
 }

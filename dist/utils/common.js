@@ -12,6 +12,6 @@ function consoleLog(title, text) {
         second: '2-digit',
     };
     const now = new Date().toLocaleString('uk-UA', options);
-    console.log(`- \x1b[33m[${now}]\x1b[36m (${title}) \x1b[32m${text}`);
+    console.log(`- \x1b[38;5;146m[${now}]\x1b[38;5;15m (${title}) \x1b[38;5;187m${text}\x1b[0m`);
 }
 //# sourceMappingURL=common.js.map

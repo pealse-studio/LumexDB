@@ -8,6 +8,10 @@ export declare enum variableType {
     role = "role",
     message = "message"
 }
+export declare enum resetType {
+    all = "all",
+    data = "data"
+}
 declare const _default: NativeFunction<[{
     name: string;
     description: string;
@@ -18,13 +22,19 @@ declare const _default: NativeFunction<[{
 }, {
     name: string;
     description: string;
-    type: ArgType.String;
+    type: ArgType.Enum;
+    enum: typeof resetType;
     required: true;
     rest: false;
 }, {
     name: string;
     description: string;
     type: ArgType.String;
+    rest: false;
+}, {
+    name: string;
+    description: string;
+    type: ArgType.Guild;
     rest: false;
 }], true>;
 export default _default;

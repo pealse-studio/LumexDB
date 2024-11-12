@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.variableType = void 0;
+exports.resetType = exports.variableType = void 0;
 const forgescript_1 = require("@tryforge/forgescript");
 const database_1 = require("../utils/database");
 var variableType;
@@ -13,6 +13,11 @@ var variableType;
     variableType["role"] = "role";
     variableType["message"] = "message";
 })(variableType || (exports.variableType = variableType = {}));
+var resetType;
+(function (resetType) {
+    resetType["all"] = "all";
+    resetType["data"] = "data";
+})(resetType || (exports.resetType = resetType = {}));
 exports.default = new forgescript_1.NativeFunction({
     name: "$resetVar",
     version: "1.0.0",
@@ -31,7 +36,8 @@ exports.default = new forgescript_1.NativeFunction({
         {
             name: "reset",
             description: "Reset type",
-            type: forgescript_1.ArgType.String,
+            type: forgescript_1.ArgType.Enum,
+            enum: resetType,
             required: true,
             rest: false
         },
@@ -40,10 +46,26 @@ exports.default = new forgescript_1.NativeFunction({
             description: "Entity ID",
             type: forgescript_1.ArgType.String,
             rest: false
+        },
+        {
+            name: "guild",
+            description: "Guild ID",
+            type: forgescript_1.ArgType.Guild,
+            rest: false
         }
     ],
-    execute(ctx, [type, reset, id]) {
-        (0, database_1.resetVar)(type, reset, String(id));
+    execute(ctx, [type, reset, id, guild]) {
+        if (type === "global") {
+            (0, database_1.resetVar)(type, String(reset));
+            return this.success();
+        }
+        ;
+        let key = id || ctx[type]?.id;
+        if (["member", "channel", "role", "message"].includes(type)) {
+            key = `${key}-${guild?.id || ctx.guild.id}`;
+        }
+        ;
+        (0, database_1.resetVar)(type, String(reset), key);
         return this.success();
     },
 });
