@@ -7,7 +7,6 @@ exports.setVar = setVar;
 exports.deleteVar = deleteVar;
 exports.getVar = getVar;
 exports.toggleVar = toggleVar;
-exports.filterVar = filterVar;
 exports.resetVar = resetVar;
 exports.optimizationVar = optimizationVar;
 exports.updateVar = updateVar;
@@ -148,22 +147,6 @@ function toggleVar(type, name, id) {
     }
     catch (error) {
         consoleLog("LumexDB | toggleVar", error);
-    }
-    finally {
-        db.close();
-    }
-}
-function filterVar(type, name, value, id, guild) {
-    const path = (0, path_1.join)(files, `${type}`);
-    if (!(0, fs_1.existsSync)(path))
-        return;
-    const db = new better_sqlite3_1.default(path);
-    try {
-        let result = db.prepare('SELECT id, value FROM data').all();
-        return JSON.stringify(result) || undefined;
-    }
-    catch (error) {
-        consoleLog("LumexDB | filterVar", error);
     }
     finally {
         db.close();
