@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LumexDB = void 0;
 const forgescript_1 = require("@tryforge/forgescript");
-const database_1 = require("./utils/database");
+const database_1 = require("./database");
 class LumexDB extends forgescript_1.ForgeExtension {
     name = "LumexDB";
     description = require("../package.json").description;

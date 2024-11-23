@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.resetType = exports.variableType = void 0;
 const forgescript_1 = require("@tryforge/forgescript");
-const database_1 = require("../utils/database");
+const database_1 = require("../database");
 var variableType;
 (function (variableType) {
     variableType["global"] = "global";

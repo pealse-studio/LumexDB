@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const forgescript_1 = require("@tryforge/forgescript");
-const database_1 = require("../utils/database");
+const database_1 = require("../database");
 exports.default = new forgescript_1.NativeFunction({
     name: "$updateVar",
     version: "1.0.0",
@@ -10,6 +10,6 @@ exports.default = new forgescript_1.NativeFunction({
     execute(ctx) {
         (0, database_1.updateVar)();
         return this.success();
-    },
+    }
 });
 //# sourceMappingURL=updateVar.js.map
