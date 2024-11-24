@@ -8,7 +8,7 @@
     "build": "tsc"
   },
   "author": "mlad_",
-  "license": "MIT",
+  "license": "GPL-3.0",
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.11",
     "@types/node": "^22.8.1",
